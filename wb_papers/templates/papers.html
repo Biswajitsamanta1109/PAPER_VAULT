@@ -9,8 +9,8 @@
                 </h4>
                 <p class="text-muted small mb-0">Browse and download verified previous year papers from WB colleges.</p>
             </div>
-            {% if user.is_authenticated and user.profile.role == 'FACULTY' and user.profile.is_verified %}
-            <a href="{% url 'upload' %}" class="btn btn-primary rounded-pill px-4">
+            {% if user.is_authenticated and user.profile.role == 'FACULTY' and user.profile.is_verified %} # This condition checks if the user is logged in, has a profile with the role of 'FACULTY', and is verified. If all these conditions are true, it means the user is an authenticated faculty member who has been verified by the admin, and therefore they are granted access to upload new question papers to the archive. The "Upload Paper" button will only be visible to such users, allowing them to contribute to the collection of papers available for students.
+            <a href="{% url 'upload' %}" class="btn btn-primary rounded-pill px-4"> #
                 <i class="bi bi-cloud-arrow-up me-2"></i>Upload Paper
             </a>
             {% endif %}
@@ -22,9 +22,9 @@
                 <label class="form-label fw-bold small text-muted text-uppercase">Type</label>
                 <select name="exam_type" class="form-select shadow-none border-primary-subtle">
                     <option value="">All Types</option>
-                    <option value="INTERNAL" {% if request.GET.exam_type == 'INTERNAL' %}selected{% endif %}>Internal / CA</option>
+                    <option value="INTERNAL" {% if request.GET.exam_type == 'INTERNAL' %}selected{% endif %}>Internal / CA</option> # This option in the dropdown menu allows users to filter question papers based on their exam type. If a user selects "Internal / CA" from the dropdown, the view will receive the value "INTERNAL" as a query parameter (e.g., ?exam_type=INTERNAL). The view can then use this parameter to filter the papers queryset to include only those papers that have an exam_type of "INTERNAL". This helps users narrow down their search results to find papers that are specifically for internal assessments or continuous assessment (CA) exams, as opposed to semester-end exams or practical exams.
                     <option value="SEMESTER" {% if request.GET.exam_type == 'SEMESTER' %}selected{% endif %}>Semester (End-Sem)</option>
-                    <option value="PRACTICAL" {% if request.GET.exam_type == 'PRACTICAL' %}selected{% endif %}>Practical</option>
+                    <option value="PRACTICAL" {% if request.GET.exam_type == 'PRACTICAL' %}selected{% endif %}>Practical</option> # request.GET.exam_type checks if the current filter selection in the dropdown matches the value of 'PRACTICAL'. If it does, the "Practical" option will be marked as selected in the dropdown menu when the page is rendered. This allows users to see which exam type filter is currently applied to their search results.
                 </select>
             </div>
             <div class="col-md-4">
@@ -32,8 +32,8 @@
                 <select name="college" class="form-select shadow-none border-primary-subtle" id="collegeSelect">
                     <option value="">All WB Colleges & Universities</option>
                     {% for c in colleges %}
-                    <option value="{{c.id}}" {% if request.GET.college == c.id|stringformat:"s" %}selected{% endif %}>{{c.name}}</option>
-                    {% endfor %}
+                    <option value="{{c.id}}" {% if request.GET.college == c.id|stringformat:"s" %}selected{% endif %}>{{c.name}}</option> # c.id is the unique identifier for each college in the database, and c.name is the name of the college that will be displayed in the dropdown menu. The condition {% if request.GET.college == c.id|stringformat:"s" %} checks if the current filter selection in the dropdown matches the ID of the college. If it does, that option will be marked as selected when the page is rendered, allowing users to see which college filter is currently applied to their search results.
+                    {% endfor %} # stringformat:"s" is used to convert the college ID to a string for comparison with the value from request.GET, which is also a string. This ensures that the comparison works correctly and the appropriate option is marked as selected in the dropdown menu.
                 </select>
             </div>
             <div class="col-md-3">
@@ -41,9 +41,9 @@
                 <select name="stream" class="form-select shadow-none border-primary-subtle" id="streamSelect">
                     <option value="">Select Stream</option>
                     {% for s in streams %}
-                    <option value="{{s.id}}" 
+                    <option value="{{s.id}}"   # value is the unique identifier for each stream in the database, which will be sent as a query parameter when the form is submitted.
                         data-college="{{s.college_id}}"
-                        {% if request.GET.stream == s.id|stringformat:"s" %}selected{% endif %}>
+                        {% if request.GET.stream == s.id|stringformat:"s" %}selected{% endif %}> # reques
                         {{s.name}}
                     </option>
                     {% endfor %}
@@ -64,7 +64,7 @@
                     <option value="">All Sems</option>
                     {% for i in "12345678" %}
                     <option value="{{forloop.counter}}" {% if request.GET.semester == forloop.counter|stringformat:"s" %}selected{% endif %}>Sem {{forloop.counter}}</option>
-                    {% endfor %}
+                    {% endfor %} # value is using for 
                 </select>
             </div>
             <div class="col-md-3">
@@ -72,8 +72,9 @@
                     <button type="submit" class="btn btn-primary w-100 shadow-sm fw-bold">
                         <i class="bi bi-filter-circle me-2"></i>Apply Filters
                     </button>
-                    <a href="{% url 'papers' %}" class="btn btn-outline-secondary shadow-sm">
-                        <i class="bi bi-arrow-clockwise"></i>
+                    <a href="{% url 'papers' %}" class="btn btn-outline-secondary shadow-sm"> # 
+                        <i class="bi bi-arrow-clockwise"></i> # clockwise arrow icon from Bootstrap Icons, used here to visually represent the "Reset" action for the filters. When users click this button, it will refresh the page and clear all applied filters, showing the default view of all papers without any filtering criteria.
+                         
                     </a>
                 </div>
             </div>
@@ -99,7 +100,7 @@
             <td class="col-sub">
                 <div class="fw-bold text-dark">{{ paper.subject_name }}</div>
                 <span class="badge bg-light text-secondary border fw-normal" style="font-size: 0.7rem;">
-                    {{ paper.subject_code }}
+                    {{ paper.subject_code }} # This line displays the subject code of the paper in a badge below the subject name. The badge is styled with a light background and secondary text color to differentiate it from the main subject name, which is displayed in bold and dark text. The subject code provides additional information about the paper, such as its unique identifier or course code, which can help users quickly identify the specific subject associated with the question paper.
                 </span>
             </td>
 
@@ -107,7 +108,7 @@
 
             <td class="col-year text-secondary">{{ paper.semester }}</td>
             <td class="col-type">
-                <span class="badge bg-info-subtle text-dark border-0 px-2" style="font-size: 0.7rem;">{{ paper.exam_type|title }}</span>  
+                <span class="badge bg-info-subtle text-dark border-0 px-2" style="font-size: 0.7rem;">{{ paper.exam_type|title }}</span>  # title filter capitalizes the first letter of each word in the exam_type value. For example, if paper.exam_type is "internal", it will be displayed as "Internal". If it's "semester", it will be displayed as "Semester". This enhances the readability of the exam type by presenting it in a more user-friendly format. The badge styling with a subtle info background and dark text helps to visually distinguish the exam type information from other details in the table.
             </td>
 
             <td class="col-clg small text-muted">
@@ -124,13 +125,13 @@
 
             <td class="col-action text-end">
                 <div class="d-inline-flex gap-2">
-                    <a href="{{ paper.pdf_file.url }}" class="btn btn-sm btn-outline-success rounded-pill px-3 shadow-sm" target="_blank">
+                    <a href="{{ paper.pdf_file.url }}" class="btn btn-sm btn-outline-success rounded-pill px-3 shadow-sm" target="_blank"> # pdf_
                         <i class="bi bi-file-earmark-pdf me-1"></i>View
                     </a>
                 {% comment %} Give Edit/Delete and View Option if User is Loggedin and those papers uplaoded by him {% endcomment %}
-                    {% if user.is_authenticated and paper.uploaded_by == user %}
+                    {% if user.is_authenticated and paper.uploaded_by == user %} # This condition checks if the user is logged in and is the one who uploaded the paper. If both conditions are true, it means the user has permission to edit or delete that specific paper, and therefore the "Edit" and "Delete" buttons will be displayed in the Action column for that paper. This ensures that only the uploader of the paper can see and access the options to modify or remove their own uploads, while other users will only see the option to view/download the paper.
                         <div class="btn-group shadow-sm" role="group">
-                            <a href="{% url 'edit_paper' paper.pk %}" class="btn btn-sm btn-primary rounded-start-pill px-3" title="Edit Paper">
+                            <a href="{% url 'edit_paper' paper.pk %}" class="btn btn-sm btn-primary rounded-start-pill px-3" title="Edit Paper"> # paper.pk is the primary key of the paper, which is passed as an argument to the 'edit_paper' URL. This allows the view associated with the 'edit_paper' URL to identify which specific paper is being edited based on its unique identifier. When the user clicks the "Edit" button, they will be taken to a page where they can modify the details of that particular paper.
                                 <i class="bi bi-pencil-square"></i>
                             </a>
                             <a href="{% url 'delete_paper' paper.pk %}" class="btn btn-sm btn-danger rounded-end-pill px-3" title="Delete Paper">
@@ -142,11 +143,11 @@
                 </div>
             </td>
         </tr>
-        {% empty %}
+        {% empty %} # The {% empty %} template tag is used to define a block of code that will be executed if the for loop does not iterate over any items, meaning that the papers queryset is empty and there are no question papers to display. In this case, instead of showing an empty table, a message will be displayed to inform the user that no question papers were found matching their criteria. This enhances the user experience by providing feedback when there are no results to show, rather than leaving the table blank.
         <tr>
             <td colspan="7" class="text-center py-5 text-muted bg-light bg-opacity-50">
                 <i class="bi bi-search d-block fs-1 mb-2 opacity-25"></i>
-                <p class="mb-0">No question papers found matching your criteria.</p>
+                <p class="mb-0">No question papers found matching your criteria.</p> # This line displays a message to the user when there are no question papers that match the search criteria they have applied through the filters. It informs them that their search did not yield any results, which can help them understand that they may need to adjust their filters or search terms to find the papers they are looking for. This message is important for providing feedback to users and improving their experience on the site when their search does not return any results.
                 <small>Try clearing your filters or selecting a different college.</small>
             </td>
         </tr>
@@ -156,9 +157,9 @@
 {% comment %} Paginator Logic {% endcomment %}
 <nav aria-label="Page navigation" class="mt-4">
     <ul class="pagination justify-content-center">
-        {% if papers.has_previous %}
+        {% if papers.has_previous %} # This condition checks if there are previous pages available in the pagination. If papers.has_previous is true, it means that the user is not on the first page of results and can navigate back to previous pages. In this case, the pagination links for "First" and "Previous" will be displayed, allowing the user to go back to the first page or the immediately preceding page of results. If papers.has_previous is false, it means the user is on the first page and there are no previous pages to navigate to, so these links will not be shown.
             <li class="page-item">
-                <a class="page-link" href="?page=1&college={{ request.GET.college }}&stream={{ request.GET.stream }}&year={{ request.GET.year }}&semester={{ request.GET.semester }}">&laquo; First</a>
+                <a class="page-link" href="?page=1&college={{ request.GET.college }}&stream={{ request.GET.stream }}&year={{ request.GET.year }}&semester={{ request.GET.semester }}">&laquo; First</a> # 
             </li>
             <li class="page-item">
                 <a class="page-link" href="?page={{ papers.previous_page_number }}&college={{ request.GET.college }}&stream={{ request.GET.stream }}&year={{ request.GET.year }}&semester={{ request.GET.semester }}">Previous</a>
@@ -167,12 +168,12 @@
 
         <li class="page-item active"><span class="page-link">Page {{ papers.number }} of {{ papers.paginator.num_pages }}</span></li>
 
-        {% if papers.has_next %}
+        {% if papers.has_next %} # This condition checks if there are next pages available in the pagination. If papers.has_next is true, it means that the user is not on the last page of results and can navigate forward to subsequent pages. In this case, the pagination links for "Next" and "Last" will be displayed, allowing the user to go to the next page or jump directly to the last page of results. If papers.has_next is false, it means the user is on the last page and there are no further pages to navigate to, so these links will not be shown.
             <li class="page-item">
                 <a class="page-link" href="?page={{ papers.next_page_number }}&college={{ request.GET.college }}&stream={{ request.GET.stream }}&year={{ request.GET.year }}&semester={{ request.GET.semester }}">Next</a>
             </li>
             <li class="page-item">
-                <a class="page-link" href="?page={{ papers.paginator.num_pages }}&college={{ request.GET.college }}&stream={{ request.GET.stream }}&year={{ request.GET.year }}&semester={{ request.GET.semester }}">Last &raquo;</a>
+                <a class="page-link" href="?page={{ papers.paginator.num_pages }}&college={{ request.GET.college }}&stream={{ request.GET.stream }}&year={{ request.GET.year }}&semester={{ request.GET.semester }}">Last &raquo;</a>    # raquo; is a HTML entity that represents a right-pointing double angle quotation mark (»). In this context, it is used in the "Last" pagination link to visually indicate that clicking this link will take the user to the last page of results. The use of such symbols can enhance the user interface by providing intuitive visual cues about the action that will occur when the link is clicked.
             </li>
         {% endif %}
     </ul>

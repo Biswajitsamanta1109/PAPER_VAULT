@@ -181,19 +181,19 @@ def populate():
     ]
 
     for c_data in colleges_data:
-        college, created = College.objects.get_or_create(
-            slug=c_data['slug'],
-            defaults={'name': c_data['name'], 'university': c_data['uni']}
+        college, created = College.objects.get_or_create( # get_or_create -> If a college with the given slug already exists, it will return that college and created=False. If it doesn't exist, it will create a new college with the provided name and university, and return it with created=True.
+            slug=c_data['slug'],# 
+            defaults={'name': c_data['name'], 'university': c_data['uni']} # If a new college is created, it will use the name and university provided in defaults. If the college already exists, defaults will be ignored and the existing college's name and university will remain unchanged.
         )
-        if created:
+        if created: # means : if college is created for the first time then print "Added: College Name"
             print(f" Added: {college.name}")
-        else:
-            college.name = c_data['name']
+        else: # means : if college already exists in database then update its name and university with the latest data from colleges_data list, this is useful in case we want to change university name or correct any typo in college name later on, so we dont have to delete and re-add college again, just run this script and it will update existing records as well.
+            college.name = c_data['name'] 
             college.university = c_data['uni']
             college.save()
-            print(f" Updated: {college.name}")
+            print(f" Updated: {college.name}") # means : if college already exists in database then print "Updated: College Name"
 
-        for s_name in c_data['streams']:
+        for s_name in c_data['streams']: #
             _, s_created = Stream.objects.get_or_create(college=college, name=s_name)
             if s_created:
                 print(f"   + {s_name}")

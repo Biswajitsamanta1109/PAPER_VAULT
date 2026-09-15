@@ -9,10 +9,12 @@ def contact_us(request):
         name = request.POST.get('name', '').strip()
         email = request.POST.get('email', '').strip()
         message_body = request.POST.get('message', '').strip()
+        # strip() is used to remove any leading or trailing whitespace from the input values.
 
         if not name or not email or not message_body:
             messages.error(request, "Please fill in all fields before submitting.")
             return render(request, 'contact_us.html')
+            # messages.error() is used in <entity>Django</entity> to display an error message to the user.
 
         # Form is valid — show success
         # To send real emails later, configure EMAIL_BACKEND in settings.py

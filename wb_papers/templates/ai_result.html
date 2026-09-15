@@ -11,8 +11,8 @@
         <div class="card-body p-4 p-md-5">
             <div class="ai-content"> 
                 <div id="ai-output"></div>
-                {{ result|json_script:"ai-raw-result" }}
-            </div>
+                {{ result|json_script:"ai-raw-result" }} # json_script is a Django template filter that safely outputs a JSON-encoded version of the result variable into the HTML. By using json_script, we can ensure that the data is properly escaped and can be accessed in JavaScript without risking XSS vulnerabilities. In this case, the AI analysis result (which may contain complex data structures) is encoded as JSON and stored in a script tag with the ID "ai-raw-result". This allows us to easily retrieve and parse the result in our JavaScript code to dynamically display it on the page. For example, if the result contains a list of topics extracted from the papers, we can access that data in JavaScript and format it for display in the #ai-output div.    
+            </div> # ai sendin result in json format and we are parsing it in script tag below and then showing it in ai-output div
             
             <hr class="my-4 border-secondary opacity-25">
             
@@ -21,19 +21,19 @@
                     <i class="bi bi-arrow-left me-1"></i> New Analysis
                 </a>
                 <button onclick="window.print()" class="btn btn-success rounded-pill px-4">
-                    <i class="bi bi-printer me-1"></i> Print / Save PDF
+                    <i class="bi bi-printer me-1"></i> Print / Save PDF         # The "Print / Save PDF" button allows users to easily print the AI analysis report or save it as a PDF file using the browser's built-in print functionality. When the user clicks this button, the window.print() function is called, which opens the print dialog. From there, users can choose to print the report directly or select "Save as PDF" to download a PDF version of the analysis. This feature enhances the usability of the application by providing a convenient way for users to keep a record of their AI analysis results or share them with others. For example, after analyzing a set of papers and generating a summary, a user might want to save that summary as a PDF for future reference or to share with classmates or colleagues.
                 </button>
             </div>
         </div>
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> # 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const outputDiv = document.getElementById('ai-output');
-        const rawMarkdown = JSON.parse(document.getElementById('ai-raw-result').textContent);
-        outputDiv.innerHTML = marked.parse(rawMarkdown);
+    document.addEventListener("DOMContentLoaded", function() { #domcontentloaded event ensures that the JavaScript code runs only after the entire HTML document has been fully loaded and parsed. This is important because we need to access the DOM elements (like the ai-output div and the ai-raw-result script tag) to display the AI analysis results. By waiting for the DOMContentLoaded event, we can be sure that these elements are available in the DOM before we try to manipulate them with JavaScript. For example, if we tried to access the ai-output div before the DOM was fully loaded, we might encounter errors because that element wouldn't exist yet.
+        const outputDiv = document.getElementById('ai-output'); # This line retrieves the DOM element with the ID "ai-output" and stores it in the variable outputDiv. This is the div where we will display the formatted AI analysis results. By getting a reference to this element, we can later set its innerHTML to show the results of the AI analysis in a user-friendly format. For example, after parsing the raw JSON result from the AI, we can use this outputDiv to display a nicely formatted summary or list of topics extracted from the papers.
+        const rawMarkdown = JSON.parse(document.getElementById('ai-raw-result').textContent); #json.parse is used to convert the JSON-encoded string (which contains the raw AI analysis result) back into a JavaScript object or string that we can work with. The document.getElementById('ai-raw-result').textContent retrieves the JSON string from the script tag where we stored the AI result using json_script in the Django template. By parsing this JSON string, we can access the actual content of the AI analysis, which may be in Markdown format, and then use it to display the results in a more readable way. For example, if the AI returns a summary in Markdown format, this line will allow us to parse that summary and prepare it for rendering in the outputDiv.
+        outputDiv.innerHTML = marked.parse(rawMarkdown); #marked.parse is a function from the Marked library that takes a Markdown-formatted string (in this case, rawMarkdown) and converts it into HTML. By setting outputDiv.innerHTML to the result of marked.parse(rawMarkdown), we can display the AI analysis results in a nicely formatted way on the webpage. This allows us to take advantage of Markdown's simplicity for formatting text (such as headings, lists, bold/italic text, etc.) while still presenting it in a visually appealing manner using HTML. For example, if the AI returns a list of topics in Markdown format, this line will convert that list into an HTML unordered list that can be easily read by users.h 
     });
 </script>
 {% endblock %}

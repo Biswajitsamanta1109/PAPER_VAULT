@@ -5,34 +5,34 @@
         <div class="col-md-6">
             <div class="card shadow-lg border-0 animate-fadeIn">
                 <div class="card-body p-5">
-                    <h2 class="text-center mb-4 fw-bold" style="color: var(--nav-footer-bg);">Create Account</h2>
+                    <h2 class="text-center mb-4 fw-bold" style="color: var(--nav-footer-bg);">Create Account</h2> # The value of --nav-footer-bg is defined somewhere else.
                     
                     <form method="POST">
                         {% csrf_token %}
                         
                         <div class="registration-form-container">
-                            {% for field in form %}
-                                <div class="mb-3 text-start">
+                            {% for field in form %} # Django template loop.,,It automatically loops through every field inside your form.
+                                <div class="mb-3 text-start"> # text-start is a <entity>Bootstrap</entity> class used to align text to the start side of the page.
                                     <label class="form-label d-block fw-bold text-muted small mb-1">
-                                        {% if field.label == "Username" %}
+                                        {% if field.label == "Username" %} # Checks if current field label is: Username
                                             Faculty ID (Login)
                                         
                                         {% else %}
-                                            {{ field.label }}
-                                        {% endif %}
-                                    </label>
+                                            {{ field.label }}# Displays actual field label.
+                                        {% endif %} 
+                                    </label> # this lebel is used for only username field to show "Faculty ID (Login)" instead of just "Username", rest all fields will show their actual label as defined in Django form class.
                                     <!-- Generate all the form fields  -->
-                                    {{ field }}
+                                    {{ field }} # This is where the actual form field (input box, dropdown, etc.) will be rendered on the page. It uses Django's form rendering system to display the appropriate HTML for each field based on its type and attributes defined in the form class.
                                     <!-- ........................ -->
-                                    {% if field.label == "Username" %}
+                                    {% if field.label == "Username" %} # Again checks username field.
                                         <div class="form-text text-primary small mt-1">
                                             <i class="bi bi-person-badge me-1"></i> This ID will be used as your official Username to Login.
                                         </div>
                                     {% endif %}
                                     <!-- To show what went wrong in Form Fill Up -->
-                                    {% if field.errors %}
+                                    {% if field.errors %} # Checks if there are any validation errors associated with the current form field. If there are errors, it will display them in a styled div below the field.
                                         <div class="text-danger small mt-1">
-                                            <i class="bi bi-exclamation-circle me-1"></i> {{ field.errors|striptags }}
+                                            <i class="bi bi-exclamation-circle me-1"></i> {{ field.errors|striptags }} #  striptage -> Removes unwanted HTML tags from error messages.,Displays form validation errors.
                                         </div>
                                     {% endif %}
                                 </div>
@@ -44,7 +44,7 @@
                             <select name="role" class="form-select border-primary">
                                 <option value="FACULTY">Faculty (Upload & Manage)</option>
                             </select>
-                        </div>
+                        </div> # this is not the part of django form, this is a custom dropdown menu to select user role during registration, since we have only one role "FACULTY" for now, so no option for "STUDENT" in dropdown, because students will be registered by admin manually.
                         
                         <button type="submit" class="btn btn-student w-100 py-2 shadow fw-bold">Sign Up</button>
                     </form>

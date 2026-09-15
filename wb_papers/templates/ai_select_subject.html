@@ -7,19 +7,19 @@
         
         <form action="{% url 'ai_analyze' %}" method="POST">
             {% csrf_token %}
-            {% for key, value in filters.items %}
-                <input type="hidden" name="{{ key }}" value="{{ value }}">
+            {% for key, value in filters.items %} 
+                <input type="hidden" name="{{ key }}" value="{{ value }}"> # values of  key and value  are sent as hidden inputs to the backend when the user submits the subject selection form. This allows us to preserve all the filter parameters that the user initially selected (such as task type, institution, stream, year range, semester, and exam type) and pass them along to the ai_analyze view. By including these hidden inputs, we ensure that the AI analysis performed in the next step is based on the same criteria that the user originally specified, even after they select a specific subject from the list. For example, if a user selected "Topic Extraction" as their task type and filtered for papers from "ABC University" between 2020 and 2023, all of those selections will be included as hidden inputs in this form, allowing the ai_analyze view to access those filters and perform the analysis accordingly.
             {% endfor %}
 
             <div class="list-group my-4 text-start">
                 {% for sub in subjects %}
                 <label class="list-group-item d-flex gap-3 py-3">
-                    <input class="form-check-input flex-shrink-0" type="radio" name="selected_subject" value="{{ sub.subject_name }}" required>
+                    <input class="form-check-input flex-shrink-0" type="radio" name="selected_subject" value="{{ sub.subject_name }}" required> # This line creates a radio button for each subject in the list of subjects that match the user's filters. The name attribute "selected_subject" ensures that only one subject can be selected at a time, and the value attribute is set to the subject's name, which will be sent to the backend when the form is submitted. The required attribute ensures that the user must select a subject before submitting the form, preventing them from proceeding without making a selection.
                     <span>
                         <strong>{{ sub.subject_name }}</strong>
                         <small class="d-block text-muted">Code: {{ sub.subject_code }}</small>
                         <div class="d-flex gap-3 mt-1">
-                            <small class="text-muted"><strong>Year:</strong> {{ sub.year }}</small>
+                            <small class="text-muted"><strong>Year:</strong> {{ sub.year }}</small> # text muted is a Bootstrap class that gives the text a lighter color, indicating that it's less important than the main content. In this case, it helps to visually differentiate the additional details (like year, semester, and exam type) from the main subject name, making the UI cleaner and easier to read.
                             <small class="text-muted"><strong>Type:</strong> {{ sub.exam_type|title }}</small>
                         </div>
                     </span>
@@ -34,11 +34,11 @@
             <button type="submit" class="btn btn-primary btn-lg rounded-pill px-5" id="analyzeBtn">
                 <span id="btnText">Analyze Now</span>
                 <span id="btnLoading" class="d-none">
-                    <span class="spinner-border spinner-border-sm me-2"></span> Analyzing...
+                    <span class="spinner-border spinner-border-sm me-2"></span> Analyzing... # When the user clicks the "Analyze Now" button, the JavaScript code (handled in script.js) will hide the "Analyze Now" text and show the loading spinner along with the "Analyzing..." text. This provides visual feedback to the user that their request is being processed, improving the user experience by indicating that something is happening after they click the button.
                 </span>
             </button>
             <div class="mt-3">
-                <a href="{% url 'ai_lab' %}" class="text-muted small text-decoration-none">
+                <a href="{% url 'ai_lab' %}" class="text-muted small text-decoration-none"> # The "Go Back" link allows users to return to the previous page (the AI Lab) if they want to change their filters or explore other options. It's styled as a small, muted text link to differentiate it from the primary action button, making it clear that it's a secondary option for navigation rather than the main call to action.
                     <i class="bi bi-arrow-left me-1"></i> Cancel & Go Back
                 </a>
             </div>

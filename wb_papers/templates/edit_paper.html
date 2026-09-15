@@ -8,7 +8,7 @@
                 <div class="bg-primary p-4 text-white d-flex justify-content-between align-items-center">
                     <div>
                         <h4 class="fw-bold mb-0"><i class="bi bi-pencil-square me-2"></i>Edit Paper Details</h4>
-                        <small class="opacity-75">ID: #PV-{{ paper.pk }} | Uploaded on {{ paper.uploaded_at|date:"d M, Y" }}</small>
+                        <small class="opacity-75">ID: #PV-{{ paper.pk }} | Uploaded on {{ paper.uploaded_at|date:"d M, Y" }}</small>   #  This line displays the unique identifier of the paper (ID: #PV-{{ paper.pk }}) and the date it was uploaded (Uploaded on {{ paper.uploaded_at|date:"d M, Y" }}). The paper.pk is the primary key of the paper instance, which serves as a unique ID for that paper in the database. The uploaded_at field is a timestamp that indicates when the paper was uploaded, and it is formatted to display the day, month, and year for better readability. This information helps users quickly identify which paper they are editing and provides context about when it was added to the system.
                     </div>
                     <a href="{% url 'papers' %}" class="btn btn-sm btn-light rounded-pill px-3">Cancel</a>
                 </div>
@@ -62,7 +62,7 @@
                                     <span class="input-group-text bg-white"><i class="bi bi-file-earmark-pdf text-danger"></i></span>
                                     <input type="file" name="pdf_file" accept=".pdf" class="form-control">
                                 </div>
-                                {% if paper.pdf_file %}
+                                {% if paper.pdf_file %} # This line checks if there is an existing PDF file associated with the paper. If there is, it displays a link to the current PDF file below the file input field. This allows users to see the name of the currently uploaded PDF and access it directly by clicking on the link. For example, if a user is editing a paper that already has a PDF file uploaded, they will see a link that says "Current: [filename.pdf]" which they can click to view the existing document before deciding whether to upload a new one or keep the current file.
                                     <div class="mt-2 small text-muted">
                                         Current: <a href="{{ paper.pdf_file.url }}" target="_blank" class="text-primary text-decoration-none">{{ paper.pdf_file.name }}</a>
                                     </div>

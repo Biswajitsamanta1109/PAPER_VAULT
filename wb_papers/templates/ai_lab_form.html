@@ -11,7 +11,7 @@
                 <div class="col-md-6">
                     <label class="form-label fw-bold">Select Analysis Goal</label>
                     <select name="task_type" class="form-select border-primary" id="taskSelect">
-                        <option value="topics">Topic Extraction (Trend Analysis)</option>
+                        <option value="topics">Topic Extraction (Trend Analysis)</option> # value 
                         <option value="summary">Smart Summary (Common Questions)</option>
                         <option value="mock_test">Mini Mock Test (MCQ)</option>
                         <option value="pdf_upload">Manual PDF Analysis (Compare 3 Files)</option>
@@ -24,7 +24,7 @@
                     <select name="exam_type" class="form-select">
                         <option value="All">All Types</option>
                         <option value="INTERNAL">Internal / CA</option>
-                        <option value="SEMESTER">Semester (End-Sem)</option>
+                        <option value="SEMESTER">Semester (End-Sem)</option> #use of value attribute to send data to backend
                         <option value="PRACTICAL">Practical</option>
                     </select>
                 </div>
@@ -39,7 +39,7 @@
                 <div class="col-md-2"><label class="small fw-bold">Stream</label>
                     <select name="stream" class="form-select" id="streamSelect">
                         <option value="All">All Streams</option>
-                        {% for s in streams %}<option value="{{s.id}}" data-college="{{s.college.name}}">{{s.name}}</option>{% endfor %}
+                        {% for s in streams %}<option value="{{s.id}}" data-college="{{s.college.name}}">{{s.name}}</option>{% endfor %} #s.id is different for different collages but s.name can be same for different colleges, so we used s.id to uniquely identify stream and data-college to filter streams by college in JS
                         {% comment %} data-college="{{s.college.name}}",, this data-college is not inbuilt html attribute,we used extra custom attribute to filter streams by college for JS {% endcomment %}
                     </select>
                 </div>
@@ -88,11 +88,11 @@
 
 
 {% block scripts %}
-    {{ block.super }}
+    {{ block.super }} # This ensures that any scripts defined in the base template are also included
     <script>
         document.getElementById('taskSelect').onchange = function() {
-            const isUpload = this.value === 'pdf_upload';
-            document.getElementById('dbSection').classList.toggle('d-none', isUpload);
+            const isUpload = this.value === 'pdf_upload'; // Check if the selected value is 'pdf_upload'
+            document.getElementById('dbSection').classList.toggle('d-none', isUpload); // Toggle the database filters section based on whether 'pdf_upload' is selected
             document.getElementById('uploadSection').classList.toggle('d-none', !isUpload);
         };
     </script>

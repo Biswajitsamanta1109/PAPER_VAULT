@@ -1,23 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container py-5 mt-4">
-    <div class="text-center mb-5">
-        <h1 class="fw-bold display-5 text-dark">Get in <span class="text-primary">Touch</span></h1>
-        <p class="text-muted mx-auto mt-3" style="max-width: 600px;">
+<div class="container py-5 mt-4">    # Container for the contact us page with padding and margin for spacing
+    <div class="text-center mb-5">    # Centered text section for the heading(mergine from bottom)
+        <h1 class="fw-bold display-5 text-dark">Get in <span class="text-primary">Touch</span></h1>   # The span tag in HTML is used to style or group a small part of text or inline elements.
+        <p class="text-muted mx-auto mt-3" style="max-width: 600px;">   # text-muted is a <entity>Bootstrap</entity> class used to make text appear light gray / faded.
             Have questions about the archive or need technical support? Our team is here to help you navigate PaperVault WB.
         </p>
     </div>
 
-    <div class="row g-5 justify-content-center">
-        <div class="col-lg-4">
+    <div class="row g-5 justify-content-center">   # g-5 is a <entity>Bootstrap</entity> class used to add gap/spacing between rows and columns in a grid layout.
+        <div class="col-lg-4"> # col-lg is a <entity>Bootstrap</entity> grid class used to create responsive columns for large screens.
             <div class="d-flex flex-column gap-4">
                 
-                <div class="p-4 bg-light rounded-4 shadow-sm">
+                <div class="p-4 bg-light rounded-4 shadow-sm"> #Used to add a small shadow around an element.
                     <div class="d-flex align-items-center mb-2">
                         <i class="bi bi-envelope-paper fs-3 text-primary me-3"></i>
                         <h5 class="fw-bold mb-0"><a href="mailto:help@papervault.wb" class="text-primary-50 text-decoration-none hover-white transition ">Email Us</a></h5>
-                    </div>
+                    </div> # to send mail help@papervault.wb
                     <p class="text-muted small mb-0">support@papervault.wb</p>
                     <p class="text-muted small">admin@papervault.wb</p>
                 </div>
@@ -44,7 +44,7 @@
         </div>
 
         <div class="col-lg-7">
-            <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5">
+            <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5">  #These are <entity>Bootstrap</entity> classes used to create a clean card layout without borders.
                 <form method="POST">
                     {% csrf_token %}
                     <div class="row g-3">
@@ -57,7 +57,7 @@
                             <input type="email" name="email" class="form-control border-light bg-light" placeholder="support@papervault.wb" required>
                         </div>
                         <div class="col-12">
-                            <label class="form-label small fw-bold text-muted">Subject</label>
+                            <label class="form-label small fw-bold text-muted">Subject</label> # dropdown menu for subject selection
                             <select name="subject" class="form-select border-light bg-light">
                                 <option value="General Inquiry">General Inquiry</option>
                                 <option value="Technical Issue">Technical Issue</option>
@@ -79,6 +79,6 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> # for the two table
 </div>
 {% endblock %}

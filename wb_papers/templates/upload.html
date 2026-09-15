@@ -19,12 +19,12 @@
                             
                             <div class="col-md-12">
                                 <label class="form-label fw-bold small text-muted text-uppercase">Paper Title</label>
-                                {{ form.title }}
+                                {{ form.title }} # This line renders the input field for the paper title as defined in the PaperUploadForm. It uses Django's form rendering system to generate the appropriate HTML for the title field, which is typically a text input box. The label above it provides a clear indication to the user that they need to enter the title of the paper they are uploading. For example, when a faculty member accesses the upload page, they will see a labeled input field where they can type in the title of their paper before submitting the form.
                             </div>
 
                             <div class="col-md-6">
                                 <label class="form-label fw-bold small text-muted text-uppercase">Institution / University</label>
-                                {{ form.college }}
+                                {{ form.college }} # This line renders the dropdown select field for choosing the institution or university associated with the paper. It uses Django's form rendering system to generate the appropriate HTML for the college field, which is typically a select box populated with options from the College model. The label above it guides the user to select the correct institution from the list when uploading their paper. For example, if a faculty member is uploading a paper from "Kolkata University," they would click on this dropdown and select "Kolkata University" from the available options before submitting the form.
                             </div>
                             {% comment %} Stream / Department We will render a custom select box for this field manually {% endcomment %}
                             <div class="col-md-6">

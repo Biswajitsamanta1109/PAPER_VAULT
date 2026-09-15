@@ -21,7 +21,7 @@
         </p>
 
         <div class="mt-4 d-flex justify-content-center gap-3 flex-wrap">
-            {% if user.is_authenticated and user.profile.role == 'FACULTY' %}
+            {% if user.is_authenticated and user.profile.role == 'FACULTY' %} 
                 {% if user.profile.is_verified %}
                     <a href="{% url 'upload' %}" class="btn btn-student btn-lg px-5">
                         <i class="bi bi-cloud-arrow-up-fill me-2"></i>Upload Paper
@@ -69,7 +69,7 @@
 </div>
 
 <!-- ── TICKER ── -->
-{% if not user.is_authenticated %}
+{% if not user.is_authenticated %} # not logged in, show general notice about who needs to login and what students can do without an account
     <div class="ticker-wrapper">
         <div class="ticker-text">
             <span><i class="bi bi-info-circle me-2"></i><strong>Notice:</strong> Only Faculty members need to login to upload or manage papers.</span>
@@ -147,9 +147,9 @@
                 {% for clg in colleges %}
                     <div class="logo-strip-item">
                         {% if clg.logo %}
-                            <img src="{{ clg.logo.url }}" alt="{{ clg.name }}" title="{{ clg.name }}">
+                            <img src="{{ clg.logo.url }}" alt="{{ clg.name }}" title="{{ clg.name }}"> # The img tag displays the college logo if it exists. The src attribute points to the URL of the logo image, and the alt and title attributes provide accessibility and tooltip information using the college name. This allows users to visually identify the participating institutions in the slideshow strip. For example, if a college named "ABC College" has a logo uploaded, this code will display that logo in the strip, and hovering over it will show "ABC College" as a tooltip.
                         {% else %}
-                            <div class="logo-strip-fallback">{{ clg.name|slice:":3"|upper }}</div>
+                            <div class="logo-strip-fallback">{{ clg.name|slice:":3"|upper }}</div> # If a college does not have a logo, this code creates a fallback element that displays the first three letters of the college name in uppercase. This ensures that even without a logo, there is still a visual representation of the college in the strip. For example, if "XYZ University" does not have a logo, this will display "XYZ" in the strip as a fallback.
                         {% endif %}
                     </div>
                 {% endfor %}
@@ -157,7 +157,7 @@
                 {% for clg in colleges %}
                     <div class="logo-strip-item">
                         {% if clg.logo %}
-                            <img src="{{ clg.logo.url }}" alt="{{ clg.name }}" title="{{ clg.name }}">
+                            <img src="{{ clg.logo.url }}" alt="{{ clg.name }}" title="{{ clg.name }}"> The img tag displays the college logo if it exists. The src attribute points to the URL of the logo image, and the alt and title attributes provide accessibility and tooltip information using the college name. This allows users to visually identify the participating institutions in the slideshow strip. For example, if a college named "ABC College" has a logo uploaded, this code will display that logo in the strip, and hovering over it will show "ABC College" as a tooltip.
                         {% else %}
                             <div class="logo-strip-fallback">{{ clg.name|slice:":3"|upper }}</div>
                         {% endif %}
@@ -202,7 +202,7 @@
     <h4 class="fw-bold mb-4 border-start border-primary border-4 ps-3">Explore by Institute</h4>
     <div class="row g-4">
         {% for clg in colleges %}
-            <div class="col-md-6 col-lg-4 college-card-wrapper" {% if forloop.counter > 8 %}style="display:none;"{% endif %}>
+            <div class="col-md-6 col-lg-4 college-card-wrapper" {% if forloop.counter > 8 %}style="display:none;"{% endif %}> # Show only first 8 colleges, hide the rest with inline style. The "Show All Institutes" button below will toggle the visibility of the hidden cards. This keeps the initial page load clean and focused while still allowing access to all colleges if desired. For example, if there are 20 colleges in the database, only the first 8 will be visible on page load, and the remaining 12 will be hidden until the user clicks the "Show All Institutes" button.
                 <a href="{% url 'papers' %}?college={{ clg.id }}" class="college-card-neon h-100 text-decoration-none shadow-sm rounded-4 p-3 d-block">
                     <div class="card-body d-flex flex-column h-100">
                         <div class="d-flex align-items-center mb-3">
@@ -233,7 +233,7 @@
     {% if colleges|length > 8 %}
             <div class="text-center mt-4">
                 <button id="showMoreBtn" class="btn btn-outline-primary rounded-pill px-5">
-                    <i class="bi bi-grid me-2"></i>Show All Institutes ({{ colleges|length }})
+                    <i class="bi bi-grid me-2"></i>Show All Institutes ({{ colleges|length }}) # This button allows users to toggle the visibility of the additional college cards that are initially hidden. When clicked, it will show all the college cards if they are currently hidden, or hide them again if they are currently visible. The button text also updates to reflect the current state (e.g., "Show All Institutes" when cards are hidden and "Show Less" when cards are visible). For example, if there are 20 colleges and only 8 are shown by default, clicking this button will reveal the remaining 12 colleges in the list.
                 </button>
             </div>
     {% endif %}

@@ -25,7 +25,7 @@
                 <span>PaperVault<span class="text-primary">WB</span></span>
             </a>
 
-            <button class="navbar-toggler border-0 shadow-none" type="button"
+            <button class="navbar-toggler border-0 shadow-none" type="button" 
                 data-bs-toggle="collapse" data-bs-target="#mainNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -114,10 +114,10 @@
     <!-- ── MESSAGES ── -->
     <div class="container mt-3">
         {% if messages %}
-            {% for message in messages %}
+            {% for message in messages %} # This loop iterates through any messages that have been added to the Django messages framework (e.g., success or error messages after form submissions) and displays them in a styled alert box. The message.tags are used to determine the type of alert (success, danger, etc.) and apply appropriate styling. For example, if a user successfully logs in, a success message might be added to the messages framework, and this code will display that message in a green alert box at the top of the page.
                 <div class="alert alert-{{ message.tags }} alert-dismissible fade show border-0 shadow-sm rounded-3" role="alert">
                     <div class="d-flex align-items-center gap-2">
-                        {% if message.tags == 'success' %}
+                        {% if message.tags == 'success' %} 
                             <i class="bi bi-check-circle-fill text-success"></i>
                         {% elif message.tags == 'danger' %}
                             <i class="bi bi-exclamation-triangle-fill text-danger"></i>

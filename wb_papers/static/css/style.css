@@ -19,7 +19,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-    --nav-footer-bg: #0f172a;
+    --nav-footer-bg: #0f172a; 
     --accent-blue: #2563eb;
     --accent-blue-dark: #1d4ed8;
     --light-blue-bg: #f0f7ff;

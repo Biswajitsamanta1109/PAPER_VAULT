@@ -24,7 +24,7 @@
                 <label class="form-label fw-bold small text-muted text-uppercase">Type</label>
                 <select name="material_type" class="form-select shadow-none border-primary-subtle" id="matTypeSelect">
                     <option value="">All Types</option>
-                    <option value="NOTES" {% if request.GET.material_type == 'NOTES' %}selected{% endif %}>Notes</option>
+                    <option value="NOTES" {% if request.GET.material_type == 'NOTES' %}selected{% endif %}>Notes</option> #
                     <option value="ASSIGNMENT" {% if request.GET.material_type == 'ASSIGNMENT' %}selected{% endif %}>Assignment</option>
                     <option value="LAB_MANUAL" {% if request.GET.material_type == 'LAB_MANUAL' %}selected{% endif %}>Lab Manual</option>
                     <option value="PLACEMENT" {% if request.GET.material_type == 'PLACEMENT' %}selected{% endif %}>Placement Notes</option>
@@ -37,7 +37,7 @@
                 <select name="college" class="form-select shadow-none border-primary-subtle" id="matCollegeSelect">
                     <option value="">All Colleges</option>
                     {% for c in colleges %}
-                        <option value="{{c.id}}" {% if request.GET.college == c.id|stringformat:"s" %}selected{% endif %}>{{c.name}}</option>
+                        <option value="{{c.id}}" {% if request.GET.college == c.id|stringformat:"s" %}selected{% endif %}>{{c.name}}</option> #stringformat
                     {% endfor %}
                 </select>
             </div>
@@ -48,9 +48,9 @@
                 <select name="stream" class="form-select shadow-none border-primary-subtle" id="matStreamSelect">
                     <option value="">All Streams</option>
                     {% for s in streams %}
-                        <option value="{{s.id}}"
-                            data-college="{{s.college_id}}"
-                            {% if request.GET.stream == s.id|stringformat:"s" %}selected{% endif %}>
+                        <option value="{{s.id}}"  
+                            data-college="{{s.college_id}}"  
+                            {% if request.GET.stream == s.id|stringformat:"s" %}selected{% endif %}> #request.GET.stream == s.id|stringformat:"s" checks if the stream ID from the GET request matches the current stream's ID in the loop. If they match, it adds the selected attribute to the option, making it the default selected option in the dropdown when the page loads. This ensures that the user's previous selection is retained when they filter materials.
                             {{s.name}}
                         </option>
                     {% endfor %}
@@ -73,8 +73,8 @@
                 <label class="form-label fw-bold small text-muted text-uppercase">Subject</label>
                 <select name="placement_subject" class="form-select shadow-none border-primary-subtle" id="placementSubjectSelect">
                     <option value="">All Subjects</option>
-                    {% if request.GET.placement_subject %}
-                        <option value="{{ request.GET.placement_subject }}" selected>{{ request.GET.placement_subject }}</option>
+                    {% if request.GET.placement_subject %} 
+                        <option value="{{ request.GET.placement_subject }}" selected>{{ request.GET.placement_subject }}</option> # 
                     {% endif %}
                 </select>
             </div>
@@ -110,7 +110,7 @@
                 {% for mat in materials %}
                 <tr>
                     <td>
-                        <div class="fw-bold text-dark">{{ mat.title }}</div>
+                        <div class="fw-bold text-dark">{{ mat.title }}</div> # Display the title of the material in bold and dark text. This is the main identifier for the material and should stand out to users.
                         <div class="small text-muted">{{ mat.subject_name }}</div>
                     </td>
                     <td class="text-center">
@@ -137,7 +137,7 @@
                     </td>
                     <td class="text-end pe-3">
                         <div class="d-inline-flex gap-2">
-                            <a href="{{ mat.pdf_file.url }}" class="btn btn-sm btn-outline-success rounded-pill px-3" target="_blank">
+                            <a href="{{ mat.pdf_file.url }}" class="btn btn-sm btn-outline-success rounded-pill px-3" target="_blank"> # Open the PDF file associated with the material in a new browser tab. The URL for the PDF is obtained from the pdf_file field of the material object. pdf_file is the FileField in the Material model that stores the uploaded PDF file. The url attribute of this field provides the URL to access the file, which is used in the href of the anchor tag to allow users to view or download the material.
                                 <i class="bi bi-file-earmark-pdf me-1"></i>View
                             </a>
                             {% if user.is_authenticated and mat.uploaded_by == user %}
@@ -153,7 +153,7 @@
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="6" class="text-center py-5 text-muted bg-light bg-opacity-50">
+                    <td colspan="6" class="text-center py-5 text-muted bg-light bg-opacity-50"> #colspan="6" is used to make the message span across all six columns of the table, ensuring that it is centered and visually prominent. This is important for user experience, as it clearly communicates that there are no study materials available based on the current filters or search criteria.
                         <i class="bi bi-journal-x d-block fs-1 mb-2 opacity-25"></i>
                         <p class="mb-0">No study materials found.</p>
                         <small>Try clearing your filters or check back later.</small>
@@ -168,21 +168,21 @@
             <ul class="pagination justify-content-center">
                 {% if materials.has_previous %}
                     <li class="page-item">
-                        <a class="page-link" href="?page=1&college={{ request.GET.college }}&stream={{ request.GET.stream }}&semester={{ request.GET.semester }}&material_type={{ request.GET.material_type }}&placement_subject={{ request.GET.placement_subject }}">&laquo; First</a>
+                        <a class="page-link" href="?page=1&college={{ request.GET.college }}&stream={{ request.GET.stream }}&semester={{ request.GET.semester }}&material_type={{ request.GET.material_type }}&placement_subject={{ request.GET.placement_subject }}">&laquo; First</a> # Provides a link to the first page of materials. The URL includes query parameters to maintain the current filter state (college, stream, semester, material type, and placement subject) when navigating to the first page. This allows users to easily return to the beginning of the paginated results while keeping their selected filters intact.page=1 indicates that the user wants to navigate to the first page of results. The other query parameters (college, stream, semester, material_type, placement_subject) are included to ensure that the filters applied by the user remain consistent when they navigate to the first page. This way, users can maintain their filtering preferences while navigating through different pages of results.
                     </li>
                     <li class="page-item">
                         <a class="page-link" href="?page={{ materials.previous_page_number }}&college={{ request.GET.college }}&stream={{ request.GET.stream }}&semester={{ request.GET.semester }}&material_type={{ request.GET.material_type }}&placement_subject={{ request.GET.placement_subject }}">Previous</a>
                     </li>
                 {% endif %}
                 <li class="page-item active">
-                    <span class="page-link">Page {{ materials.number }} of {{ materials.paginator.num_pages }}</span>
+                    <span class="page-link">Page {{ materials.number }} of {{ materials.paginator.num_pages }}</span> # Displays the current page number and the total number of pages in the pagination. materials.number gives the current page number, while materials.paginator.num_pages provides the total number of pages available based on the filtered results. This information helps users understand their position within the paginated results and how many pages they can navigate through. The active class is applied to this list item to visually indicate that it represents the current page in the pagination.
                 </li>
                 {% if materials.has_next %}
                     <li class="page-item">
                         <a class="page-link" href="?page={{ materials.next_page_number }}&college={{ request.GET.college }}&stream={{ request.GET.stream }}&semester={{ request.GET.semester }}&material_type={{ request.GET.material_type }}&placement_subject={{ request.GET.placement_subject }}">Next</a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" href="?page={{ materials.paginator.num_pages }}&college={{ request.GET.college }}&stream={{ request.GET.stream }}&semester={{ request.GET.semester }}&material_type={{ request.GET.material_type }}&placement_subject={{ request.GET.placement_subject }}">Last &raquo;</a>
+                        <a class="page-link" href="?page={{ materials.paginator.num_pages }}&college={{ request.GET.college }}&stream={{ request.GET.stream }}&semester={{ request.GET.semester }}&material_type={{ request.GET.material_type }}&placement_subject={{ request.GET.placement_subject }}">Last &raquo;</a>  # Provides a link to the last page of materials. The URL includes query parameters to maintain the current filter state (college, stream, semester, material type, and placement subject) when navigating to the last page. This allows users to easily jump to the end of the paginated results while keeping their selected filters intact.
                     </li>
                 {% endif %}
             </ul>

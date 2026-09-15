@@ -100,8 +100,8 @@ python manage.py runserver
 Create a `.env` file in the project root:
 
 ```env
-SECRET_KEY=your-django-secret-key-here
-OPENROUTER_API_KEY=your-openrouter-api-key-here
+SECRET_KEY=your-django-secret-key-here.
+OPENROUTER_API_KEY=your-openrouter-api-key-here.
 ```
 
 > Get your OpenRouter API key at [openrouter.ai](https://openrouter.ai)
