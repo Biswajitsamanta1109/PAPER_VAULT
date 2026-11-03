@@ -29,7 +29,7 @@ def materials_list(request):
     placement_subject = request.GET.get('placement_subject', '').strip()
     if placement_subject:
         materials = materials.filter(subject_name=placement_subject)
-
+ 
     paginator = Paginator(materials, 10)
     page_number = request.GET.get('page') # Get the current page number from the query parameters. If not provided, it defaults to the first page.
     page_obj = paginator.get_page(page_number) # Retrieves the appropriate page of materials based on the current page number. It handles invalid page numbers gracefully, returning the first or last page as needed.get_page() method of the Paginator class is used to get the page object for the current page number. This page object contains the materials for that page and also provides information about pagination (like has_next, has_previous, etc.).
@@ -46,7 +46,7 @@ def materials_list(request):
 def upload_material(request):
     try:
         profile = request.user.profile
-    except ObjectDoesNotExist:
+    except ObjectDoesNotExist: #ObjectDoesNotExist is a Django exception that is raised when a database query does not return any results. In this case, it is used to handle the situation where the logged-in user does not have an associated profile. If the profile does not exist, an error message is displayed, and the user is redirected to the dashboard.
         messages.error(request, "Account error: Profile not found.")
         return redirect('dashboard')
 
@@ -113,7 +113,7 @@ def delete_material(request, pk):
     return render(request, 'delete_material.html', {'material': material})
 
 
-def get_placement_subjects(request):
+def get_placement_subjects(request): # this method is using when a user selects a college from the dropdown, an AJAX request is sent to this view. The view retrieves distinct subjects that have PLACEMENT type materials and returns them as a JSON response. The frontend can then use this data to populate the "Subject" dropdown dynamically based on the selected college.
     """Returns distinct subjects that have PLACEMENT type materials"""
     subjects = Material.objects.filter(
         material_type='PLACEMENT'

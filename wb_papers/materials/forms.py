@@ -14,7 +14,7 @@ class MaterialUploadForm(forms.ModelForm):
         ('LAB_MANUAL', 'Lab Manual'),
         ('PLACEMENT', 'Placement Notes'),
     ]
-
+ 
     SEM_CHOICES = [('', '--- Select Semester ---')] + [(i, f"Semester {i}") for i in range(1, 9)]
 
     material_type = forms.ChoiceField(
@@ -56,7 +56,7 @@ class MaterialUploadForm(forms.ModelForm):
         })
 
     def clean(self): # this method is using to perform custom validation on the form data. It checks if the college and stream fields are filled out. If either field is empty, it adds an error message to that field, prompting the user to select a value. This ensures that the form cannot be submitted without selecting both a college and a stream.
-        cleaned_data = super().clean()
+        cleaned_data = super().clean() #cleaned_data is a dictionary that contains the validated data from the form fields after they have been cleaned and processed. It is used to access the values of the form fields for further validation or processing.
         college = cleaned_data.get('college')
         stream = cleaned_data.get('stream')
         if not college:
@@ -65,7 +65,7 @@ class MaterialUploadForm(forms.ModelForm):
             self.add_error('stream', 'Please select a stream.')
         return cleaned_data
 
-    class Meta:
+    class Meta: #class Meta is a nested class within the MaterialUploadForm that provides metadata about the form. It specifies which model the form is associated with (Material) and which fields from that model should be included in the form. Additionally, it defines custom widgets for certain fields to control their appearance and behavior in the rendered HTML form.
         model = Material
         fields = ['title', 'material_type', 'college', 'stream', 'subject_name', 'semester', 'description', 'pdf_file']
         widgets = {

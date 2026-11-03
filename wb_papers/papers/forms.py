@@ -23,7 +23,7 @@ class PaperUploadForm(forms.ModelForm): # This form is used for uploading papers
         empty_label="--- Select Stream ---"
     )
 
-    def __init__(self, *args, **kwargs): # 
+    def __init__(self, *args, **kwargs): # working of this method is to customize the initialization of the form. It allows you to modify the form fields, set labels, and add additional attributes to the form fields when the form is created.
         super().__init__(*args, **kwargs) #super method is called to initialize the form with any provided arguments and keyword arguments. This allows for customization of the form fields after the default initialization.
         self.fields['stream'].label_from_instance = lambda obj: f"{obj.name}" # This lambda function sets the label for each stream option in the dropdown to be the name of the stream. For example, if there is a stream with the name "Computer Science & Engineering", it will appear as that in the dropdown menu instead of something like "Stream object (1)". This makes the form more user-friendly and easier to navigate when selecting a stream.
         current_year = datetime.date.today().year # Get the current year using the datetime module. This is used to populate the year dropdown with options from the current year down to 2015.
@@ -48,7 +48,7 @@ class PaperUploadForm(forms.ModelForm): # This form is used for uploading papers
         widget=forms.FileInput(attrs={'class': 'form-control', 'required': 'true', 'accept': '.pdf'})
     )
 
-    class Meta:
+    class Meta: #class meta is a nested class within the PaperUploadForm that provides metadata about the form. It specifies which model the form is associated with (Paper) and which fields from that model should be included in the form. Additionally, it defines custom widgets for certain fields to control their appearance and behavior in the rendered HTML form.
         model = Paper
         fields = ['title', 'college', 'stream', 'subject_name', 'subject_code', 'exam_type', 'year', 'semester', 'pdf_file']
         widgets = { # This section defines custom widgets for each form field to enhance the appearance and user experience of the form. For example, the title field uses a TextInput widget with specific CSS classes and a placeholder, while the college and stream fields use Select widgets with styling and placeholders. The subject name and code fields also use TextInput widgets with appropriate styling and placeholders. The PDF file field uses a FileInput widget that restricts uploads to PDF files and includes styling.

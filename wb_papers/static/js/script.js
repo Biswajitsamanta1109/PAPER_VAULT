@@ -50,8 +50,8 @@ function applyStreamFilter(collegeEl, streamEl, resetOnChange) {
         const selected = collegeEl.value; //collegeEl.value retrieves the currently selected value from the college dropdown. This value is used to determine which streams belong to the selected college, allowing the script to filter the stream options accordingly.
         let hasVisible = false; // hasVisible is a boolean variable that tracks whether any stream options are visible after filtering. It starts as false and is set to true if at least one stream option matches the selected college, ensuring that the stream dropdown is only enabled when there are relevant options to display.
 
-        Array.from(streamEl.options).forEach(opt => { //
-            if (!opt.value) return;
+        Array.from(streamEl.options).forEach(opt => { //streamEl.options retrieves all the option elements within the stream dropdown. Array.from() converts this collection into an array, allowing the use of forEach to iterate over each option and apply filtering logic based on the selected college.
+            if (!opt.value) return; 
             const belongs = !selected || opt.dataset.college === selected; //belongs is a boolean variable that checks if the current stream option belongs to the selected college. It evaluates to true if no college is selected (allowing all streams to be shown) or if the stream's data-college attribute matches the selected college's value, ensuring that only relevant streams are displayed in the dropdown.
             opt.style.display = belongs ? '' : 'none'; //opt.style.display = belongs ? '' : 'none'; sets the display style of each stream option based on whether it belongs to the selected college. If belongs is true, the option is shown (display: ''), otherwise it is hidden (display: 'none'), effectively filtering the stream options in the dropdown to match the selected college.
             if (belongs) hasVisible = true;//
@@ -64,7 +64,7 @@ function applyStreamFilter(collegeEl, streamEl, resetOnChange) {
             const current = streamEl.querySelector('option:checked'); //current is a variable that holds the currently selected option in the stream dropdown. It is used to check if the selected stream still belongs to the newly selected college. If it doesn't, the stream selection is reset to ensure that users don't have an invalid stream selected after changing the college.
             if (current && current.dataset.college && current.dataset.college !== selected) {//current.dataset.college !== selected checks if the currently selected stream's data-college attribute does not match the newly selected college. If they don't match, it indicates that the selected stream is no longer valid for the chosen college, prompting the script to reset the stream selection to maintain consistency and prevent user confusion.
                 streamEl.value = ''; // Reset stream selection if it doesn't belong to the selected college. This ensures that users are not left with an invalid stream selection after changing the college, maintaining a logical and user-friendly interface.
-            }// if we change college after selecting  a stream.
+            }// if we change college after selecting  a stream. 
         }
     }
 
@@ -144,7 +144,7 @@ if (matTypeSelect) {
         }
     }
 
-    function loadPlacementSubjects() {
+    function loadPlacementSubjects() { //loadPlacementSubjects() is responsible for fetching the list of placement subjects from the server and populating the placementSubjectSelect dropdown with the retrieved subjects. This function is called when the user selects "PLACEMENT" as the material type, ensuring that the subject options are dynamically loaded based on the server's response.
         fetch('/materials/api/placement-subjects/')//fetch('/materials/api/placement-subjects/') sends a GET request to the specified API endpoint to retrieve a list of placement subjects in JSON format. This allows the script to dynamically populate the placementSubjectSelect dropdown with the relevant subjects based on the server's response.
             .then(r => r.json()) //r.json() converts the response from the fetch request into a JSON object, allowing the script to easily access the list of subjects returned by the API. This enables the subsequent code to iterate over the subjects and create corresponding option elements for the dropdown.
             .then(data => {
@@ -164,6 +164,7 @@ if (matTypeSelect) {
 }
 
 // ── AI LAB FORM: Continue to Analysis button ──
+
 const continueForm = document.querySelector('form[action*="ai-lab/select-subject"]'); //form[action*="ai-lab/select-subject"] selects the form element that has an action attribute containing the substring "ai-lab/select-subject". This is used to identify the specific form on the AI Lab page that allows users to continue to the analysis step after selecting a subject, enabling the script to attach an event listener for handling the form submission.
     continueForm.addEventListener('submit', function() {
         const btn = document.getElementById('continueBtn');
@@ -188,3 +189,4 @@ if (analyzeForm) {
     });
 }
 });
+//continueform and analyzeform are used to handle the submission of forms on the AI Lab page. When the user submits either form, the corresponding button's text is hidden, a loading indicator is shown, and the button is disabled to prevent multiple submissions. This provides visual feedback to the user that their request is being processed and ensures that they cannot submit the form again until the current request is complete.

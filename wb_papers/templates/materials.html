@@ -24,7 +24,7 @@
                 <label class="form-label fw-bold small text-muted text-uppercase">Type</label>
                 <select name="material_type" class="form-select shadow-none border-primary-subtle" id="matTypeSelect">
                     <option value="">All Types</option>
-                    <option value="NOTES" {% if request.GET.material_type == 'NOTES' %}selected{% endif %}>Notes</option> #
+                    <option value="NOTES" {% if request.GET.material_type == 'NOTES' %}selected{% endif %}>Notes</option> # {if request.GET.material_type == 'NOTES' %}selected{% endif %} checks if the material_type parameter in the GET request is equal to 'NOTES'. If it is, the selected attribute is added to the option, making it the default selected option in the dropdown when the page loads. This ensures that the user's previous selection is retained when they filter materials.
                     <option value="ASSIGNMENT" {% if request.GET.material_type == 'ASSIGNMENT' %}selected{% endif %}>Assignment</option>
                     <option value="LAB_MANUAL" {% if request.GET.material_type == 'LAB_MANUAL' %}selected{% endif %}>Lab Manual</option>
                     <option value="PLACEMENT" {% if request.GET.material_type == 'PLACEMENT' %}selected{% endif %}>Placement Notes</option>
@@ -37,7 +37,7 @@
                 <select name="college" class="form-select shadow-none border-primary-subtle" id="matCollegeSelect">
                     <option value="">All Colleges</option>
                     {% for c in colleges %}
-                        <option value="{{c.id}}" {% if request.GET.college == c.id|stringformat:"s" %}selected{% endif %}>{{c.name}}</option> #stringformat
+                        <option value="{{c.id}}" {% if request.GET.college == c.id|stringformat:"s" %}selected{% endif %}>{{c.name}}</option> #request.GET.college == c.id|stringformat:"s" checks if the college ID from the GET request matches the current college's ID in the loop. If they match, it adds the selected attribute to the option, making it the default selected option in the dropdown when the page loads. This ensures that the user's previous selection is retained when they filter materials.
                     {% endfor %}
                 </select>
             </div>
@@ -74,7 +74,7 @@
                 <select name="placement_subject" class="form-select shadow-none border-primary-subtle" id="placementSubjectSelect">
                     <option value="">All Subjects</option>
                     {% if request.GET.placement_subject %} 
-                        <option value="{{ request.GET.placement_subject }}" selected>{{ request.GET.placement_subject }}</option> # 
+                        <option value="{{ request.GET.placement_subject }}" selected>{{ request.GET.placement_subject }}</option> # request.GET.placement_subject retrieves the value of the placement_subject parameter from the GET request. If this parameter is present, it creates an option in the dropdown with that value and marks it as selected. This ensures that when users filter by a specific placement subject, their selection is retained and displayed in the dropdown when the page reloads.
                     {% endif %}
                 </select>
             </div>
@@ -141,7 +141,7 @@
                                 <i class="bi bi-file-earmark-pdf me-1"></i>View
                             </a>
                             {% if user.is_authenticated and mat.uploaded_by == user %}
-                                <a href="{% url 'edit_material' mat.pk %}" class="btn btn-sm btn-primary rounded-pill px-3">
+                                <a href="{% url 'edit_material' mat.pk %}" class="btn btn-sm btn-primary rounded-pill px-3"> # mat.pk is the primary key of the material object. It uniquely identifies the material in the database. When generating the URL for editing the material, mat.pk is passed as an argument to the 'edit_material' URL pattern. This allows the view associated with that URL to retrieve and edit the specific material based on its primary key.
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
                                 <a href="{% url 'delete_material' mat.pk %}" class="btn btn-sm btn-danger rounded-pill px-3">
